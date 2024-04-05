@@ -47,12 +47,17 @@ async def role_card_cmd(bot:Bot):
 async def reply_cmd(bot:Bot):
     reply(bot)
 
+@bot.on_startup
+async def mod_cmd(bot:Bot):
+    mod(bot)
+
 @bot.on_message()
 async def message(msg:Message):
     if msg.channel_type == ChannelPrivacyTypes.PERSON:
         ch = await bot.client.fetch_public_channel(f'{Receive_messages_channel_id}')
         await ch.send(CardMessage(Card(Module.Section(f'用户(met){msg.author_id}(met)发送了一条消息: {msg.content}\nmsg id: {msg.id}\n您可以使用`/reply {msg.author_id} {msg.id} (content)`回复消息'),Module.Divider(),Module.Context(f'{current_time_is}'))))
         return
+
 
 
 import logging

@@ -352,3 +352,16 @@ def download_levels(bot:Bot):
             else: msg.reply('该论坛为提供下载链接')
         except requests.exceptions.RequestException as e:
             await msg.reply(f'Error occurred while searching levels: {e}')
+
+def mod(bot:Bot):
+    @bot.command(name='mod')
+    async def mod(ctx:Message,*args):
+        mod_name = ' '.join(args)
+        bot_api = f'https://bot.adofai.gg/api/mod/{mod_name}'
+        response = requests.get(bot_api)
+
+        if response.status_code == 200:
+            data = response.json()
+            await ctx.reply(CardMessage(Card(Module.Header('Mod信息'),Module.Divider(),Module.Section(f'Mod名字：{data["name"]}\nMod作者：{data["cachedUsername"]}\nVersion: {data["version"]}\nmod描述：{data["description"]}'),Module.ActionGroup(Element.Button("点击下载",value=f'{data["parsedDownload"]}',click=Types.Click.LINK,theme=Types.Theme.INFO)))))
+        else:
+            await ctx.reply('失败')
