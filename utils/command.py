@@ -357,7 +357,7 @@ def mod(bot:Bot):
     @bot.command(name='mod')
     async def mod(ctx:Message,*args):
         mod_name = ' '.join(args)
-        bot_api = f'https://bot.adofai.gg/api/mod/{mod_name}'
+        bot_api = f'https://bot.adofai.gg/api/mods/{mod_name}'
         response = requests.get(bot_api)
 
         if response.status_code == 200:
